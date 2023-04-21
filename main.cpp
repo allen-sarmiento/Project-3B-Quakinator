@@ -14,17 +14,16 @@ void init();
 void printLogo();
 void printMenu();
 void printCurrentSettings();
-void printSortAlgoSubMenu(); // TODO
-void printSortCriteriaSubMenu(); // TODO
+void printSortAlgoSubMenu();
+void printSortCriteriaSubMenu();
 
 vector<string> sortAlgos, sortCriteria;
+unsigned int mainOption = UINT_MAX;
 unsigned int algoOption = 1;
 unsigned int criteriaOption = 1;
 unsigned int displayCount = 10;
 
 int main() {
-
-    unsigned int option = UINT_MAX;
 
     init();
 
@@ -32,29 +31,32 @@ int main() {
         // Print menu
         printMenu();
 
-        // Get user option
-        cout << "\nEnter Option: ";
-        cin >> option;
-        cout << "\nOption #" << option << " selected.\n";
-
-        switch(option) {
+        switch(mainOption) {
             case 1:     // Set Sorting Algo.
-                // TODO
+                printSortAlgoSubMenu();
                 break;
-            case 2:     // Set Display Count
-                // TODO
+            case 2:     // Set Sorting Criteria
+                printSortCriteriaSubMenu();
                 break;
-            case 3:     // Sort By
+            case 3:     // Set Display Count
                 // TODO
                 break;
             case 4:     // Shuffle List
                 // TODO
                 break;
             case 5:     // Display List
+                // TODO
+                break;
+            default:
+                if (mainOption > 6) {
+                    cout << "\nPlease enter a valid option.\n\n";
+                    cout << "Enter Option: ";
+                    cin >> mainOption;
+                }
                 break;
         }
 
-    } while(option != 6);
+    } while(mainOption != 6);
 
     return 0;
 }
@@ -84,10 +86,10 @@ void printLogo() {
 
 void printMenu() {
     cout << "---------------------------\n";
-    cout << "[MAIN MENU]\n\n";
+    cout << "[Main Menu]\n";
     cout << "1. Set Sorting Algorithm >>\n";
-    cout << "2. Set Display Count\n";
-    cout << "3. Sort By >>\n";
+    cout << "2. Sort By >>\n";
+    cout << "3. Set Display Count\n";
     cout << "4. Shuffle List\n";
     cout << "5. Display List\n";
     cout << "6. Exit\n\n";
@@ -95,19 +97,43 @@ void printMenu() {
     cout << "[Current Settings]\n";
     cout << "Algorithm: " << sortAlgos[algoOption-1] << "\n";
     cout << "Criteria: " << sortCriteria[criteriaOption-1] << "\n";
-    cout << "Display Count: " << displayCount << "\n";
+    cout << "Display Count: " << displayCount << "\n\n";
+    cout << "Enter Option: ";
+    cin >> mainOption;
 }
 
 void printSortAlgoSubMenu() {
+    cout << "\n---------------------------\n";
     cout << "[Sorting Algorithm]\n\n";
     for (int i = 0; i < sortAlgos.size(); i++)
-        cout << i+1 << ". " << sortAlgos[i];
-    cout << sortAlgos.size() << ". Return to Main Menu\n";
+        cout << i+1 << ". " << sortAlgos[i] << "\n";
+    cout << sortAlgos.size()+1 << ". Return to Main Menu\n\n";
+
+    unsigned int temp;
+    cout << "Enter Option: ";
+    cin >> temp;
+    while(temp > sortAlgos.size()+1) {
+        cout << "\nPlease enter a valid option.\n\n";
+        cout << "Enter Option: ";
+        cin >> temp;
+    }
+    algoOption = (temp == sortAlgos.size()+1) ? algoOption : temp;
 }
 
 void printSortCriteriaSubMenu() {
+    cout << "\n---------------------------\n";
     cout << "[Sort By]\n\n";
     for (int i = 0; i < sortCriteria.size(); i++)
-        cout << i+1 << ". " << sortCriteria[i];
-    cout << sortCriteria.size() << ". Return to Main Menu\n";
+        cout << i+1 << ". " << sortCriteria[i] << "\n";
+    cout << sortCriteria.size()+1 << ". Return to Main Menu\n\n";
+    
+    unsigned int temp;
+    cout << "Enter Option: ";
+    cin >> temp;
+    while(temp > sortCriteria.size()+1) {
+        cout << "\nPlease enter a valid option.\n\n";
+        cout << "Enter Option: ";
+        cin >> temp;
+    }
+    criteriaOption = (temp == sortCriteria.size()+1) ? criteriaOption : temp;
 }
