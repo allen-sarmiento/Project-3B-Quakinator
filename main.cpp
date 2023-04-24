@@ -52,6 +52,21 @@ int main() {
                 break;
             case 5:     // Display List
                 // TODO
+               int criteriaSort;
+                cin>> criteriaSort;
+                switch (criteriaSort){
+                    case 1:
+                        std::sort(quakinator.array.begin(), quakinator.array.end(), Earthquake::compareByTime);
+                    case 2:
+                        std::sort(quakinator.array.begin(), quakinator.array.end(), Earthquake::compareByMagnitude);
+                    case 3:
+                        std::sort(quakinator.array.begin(), quakinator.array.end(), Earthquake::compareByLongitude);
+                    case 4:
+                        std::sort(quakinator.array.begin(), quakinator.array.end(), Earthquake::compareByLatitude);
+                    default:
+                        cout << "\nPlease enter a valid option.\n";
+                        break;
+                }
                 break;
             default:
                 if (mainOption > 6) {
