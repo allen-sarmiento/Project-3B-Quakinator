@@ -1,9 +1,11 @@
-#include "Earthquake.h"
 #pragma once
+
+#include "Earthquake.h"
 #include <string>
 #include <vector>
 #include <iostream>
-using std namespace ;
+
+using namespace std;  
 
 void Earthquake::swap(int *a, int *b) {
     int t = *a;
@@ -26,9 +28,10 @@ bool Earthquake::compareByLatitude(const Earthquake& a, const Earthquake& b) {
     return a.latitude < b.latitude;
 }
 
+/*
 int Earthquake::partition(vector<Earthquake>& array, int low, int high, bool (*compare)(const Earthquake&, const Earthquake&)) {
     Earthquake pivot = array[low];
-    int up = low
+    int up = low;
     int down = high;
 
     while (up < down) {
@@ -51,6 +54,7 @@ int Earthquake::partition(vector<Earthquake>& array, int low, int high, bool (*c
     swap(array[low], array[down]);
     return down;
 }
+*/
 
 void Earthquake::quickSort(vector<Earthquake>& array, int low, int high, bool (*compare)(const Earthquake&, const Earthquake&)) {
     if (low < high) {
