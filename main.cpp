@@ -3,6 +3,7 @@
 #include <iostream>
 #include <sstream>
 #include <climits>
+#include <algorithm>
 
 #include "Earthquake.h"
 #include "Quakinator.h"
@@ -16,6 +17,7 @@ void printMenu();
 void printCurrentSettings();
 void printSortAlgoSubMenu();
 void printSortCriteriaSubMenu();
+void printDisplayCountSubMenu();
 
 vector<string> sortAlgos, sortCriteria;
 unsigned int mainOption = UINT_MAX;
@@ -24,6 +26,9 @@ unsigned int criteriaOption = 1;
 unsigned int displayCount = 10;
 
 int main() {
+
+    srand(time(nullptr));   // For random shuffle by time
+    Quakinator quakinator;
 
     init();
 
@@ -39,10 +44,11 @@ int main() {
                 printSortCriteriaSubMenu();
                 break;
             case 3:     // Set Display Count
-                // TODO
+                printDisplayCountSubMenu();
                 break;
             case 4:     // Shuffle List
-                // TODO
+                random_shuffle(quakinator.array.begin(), quakinator.array.end());
+                cout << "List has been shuffled!\n";
                 break;
             case 5:     // Display List
                 // TODO
@@ -136,4 +142,24 @@ void printSortCriteriaSubMenu() {
         cin >> temp;
     }
     criteriaOption = (temp == sortCriteria.size()+1) ? criteriaOption : temp;
+}
+
+void printDisplayCountSubMenu() {
+    cout << "\n---------------------------\n";
+    cout << "[Display Count]\n\n";
+
+    string temp;
+
+    while (true) {
+
+        cout << "Enter Display Count: ";
+        cin >> temp;
+
+        try {
+            displayCount = stoi(temp);
+            break;
+        } catch (exception e) {
+            cout << "Please enter a valid number.\n\n";
+        }
+    }
 }
