@@ -18,6 +18,7 @@ void printCurrentSettings();
 void printSortAlgoSubMenu();
 void printSortCriteriaSubMenu();
 void printDisplayCountSubMenu();
+void printDisplayListSubMenu();
 
 vector<string> sortAlgos, sortCriteria;
 unsigned int mainOption = UINT_MAX;
@@ -51,23 +52,30 @@ int main() {
                 cout << "List has been shuffled!\n";
                 break;
             case 5:     // Display List
-                // TODO
-               int criteriaSort;
-                cin>> criteriaSort;
-                switch (criteriaSort){
+                // Sort list based on criteria
+                switch (criteriaOption){
                     case 1:
                         std::sort(quakinator.array.begin(), quakinator.array.end(), Earthquake::compareByTime);
+                        break;
                     case 2:
                         std::sort(quakinator.array.begin(), quakinator.array.end(), Earthquake::compareByMagnitude);
+                        break;
                     case 3:
                         std::sort(quakinator.array.begin(), quakinator.array.end(), Earthquake::compareByLongitude);
+                        break;
                     case 4:
                         std::sort(quakinator.array.begin(), quakinator.array.end(), Earthquake::compareByLatitude);
+                        break;
                     default:
                         cout << "\nPlease enter a valid option.\n";
                         break;
                 }
+
+                // Display list
+                printDisplayListSubMenu();
+                
                 break;
+                
             default:
                 if (mainOption > 6) {
                     cout << "\nPlease enter a valid option.\n\n";
@@ -177,4 +185,11 @@ void printDisplayCountSubMenu() {
             cout << "Please enter a valid number.\n\n";
         }
     }
+}
+
+void printDisplayListSubMenu() {
+    cout << "\n---------------------------\n";
+    cout << "[Display List]\n\n";
+
+    // TODO: some sort of loop based on display count
 }
