@@ -20,18 +20,19 @@ void printSortCriteriaSubMenu();
 void printDisplayCountSubMenu();
 void printDisplayListSubMenu();
 
+Quakinator quakinator;
 vector<string> sortAlgos, sortCriteria;
 unsigned int mainOption = UINT_MAX;
 unsigned int algoOption = 1;
 unsigned int criteriaOption = 1;
 unsigned int displayCount = 10;
 
+
 int main() {
 
     srand(time(nullptr));   // For random shuffle by time
-    Quakinator quakinator;
-
     init();
+    quakinator.init();
 
     do {
         // Print menu
@@ -53,6 +54,7 @@ int main() {
                 break;
             case 5:     // Display List
                 // Sort list based on criteria
+                
                 switch (criteriaOption){
                     case 1:
                         std::sort(quakinator.array.begin(), quakinator.array.end(), Earthquake::compareByTime);
@@ -190,6 +192,7 @@ void printDisplayCountSubMenu() {
 void printDisplayListSubMenu() {
     cout << "\n---------------------------\n";
     cout << "[Display List]\n\n";
-
-    // TODO: some sort of loop based on display count
+    
+    for (int i = 0; i < displayCount; i++)
+        cout << i+1 << ". " << quakinator.array[i].to_string() << "\n";
 }
