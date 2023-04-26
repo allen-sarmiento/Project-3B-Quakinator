@@ -5,10 +5,11 @@
 #include <climits>
 #include <algorithm>
 #include <chrono>
-
 #include "Quakinator.h"
 
 using namespace std;
+
+#define Q Quakinator
 
 void init();
 void printLogo();
@@ -22,7 +23,7 @@ void sortList(bool (*compare)(const string&, const string&));
 string getEQString(string key);
 
 Quakinator quakinator;
-unordered_map<string, vector<double>> Quakinator::data;
+unordered_map<string, vector<double>> Q::data;
 vector<string> sortAlgos, sortCriteria;
 unsigned int mainOption = UINT_MAX;
 unsigned int algoOption = 1;
@@ -61,16 +62,16 @@ int main() {
                 // Sort list based on criteria
                 switch (criteriaOption) {
                     case 1:
-                        // sortList(Quakinator::compareByTime);
+                        // sortList(Q::compareByTime);
                         break;
                     case 2:
-                        sortList(Quakinator::compareByMagnitude);
+                        sortList(Q::compareByMagnitude);
                         break;
                     case 3:
-                        sortList(Quakinator::compareByLongitude);
+                        sortList(Q::compareByLongitude);
                         break;
                     case 4:
-                        sortList(Quakinator::compareByLatitude);
+                        sortList(Q::compareByLatitude);
                         break;
                     default:
                         break;
@@ -225,6 +226,6 @@ void sortList(bool (*compare)(const string&, const string&)) {
 }
 
 string getEQString(string key) {
-    vector<double> v = Quakinator::data[key];
+    vector<double> v = Q::data[key];
     return "Time: " + key + ", Lat: " + to_string(v[0]) + ", Lon: " + to_string(v[1]) + ", Mag: " + to_string(v[2]) + "\n";
 }
