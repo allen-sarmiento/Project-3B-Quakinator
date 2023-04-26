@@ -4,6 +4,7 @@
 #include <sstream>
 #include <climits>
 #include <algorithm>
+#include <chrono>
 
 #include "Earthquake.h"
 #include "Quakinator.h"
@@ -53,9 +54,12 @@ int main() {
                 cout << "\nList has been shuffled!\n\n";
                 break;
             case 5:     // Display List
+            {
+                // Start sort clock
+                auto start = chrono::high_resolution_clock::now();
 
                 // Sort list based on criteria
-                switch (criteriaOption){
+                switch (criteriaOption) {
                     case 1:
                         sortList(Earthquake::compareByTime);
                         break;
@@ -69,14 +73,21 @@ int main() {
                         sortList(Earthquake::compareByLatitude);
                         break;
                     default:
-                        cout << "\nPlease enter a valid option.\n";
                         break;
                 }
+
+                // End sort clock
+                auto end = chrono::high_resolution_clock::now();
+                float duration = chrono::duration_cast<chrono::milliseconds>(end - start).count();
+
+                cout << "\nSort Duration: " << duration << "\n";
 
                 // Display list
                 printDisplayListSubMenu();
                 
                 break;
+                
+            }
                 
             default:
                 if (mainOption > 6) {
