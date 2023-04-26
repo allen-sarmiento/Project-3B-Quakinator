@@ -5,14 +5,16 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
-#include <map>
+#include <unordered_map>
 
 using namespace std;
 
 struct Quakinator {
 
     // Using time string as keys
-    map<string, vector<double>> data;
+    unordered_map<string, vector<double>> data;
+
+    vector<string> keys;
 
     /*
     void swap(Earthquake& a, Earthquake& b) {
@@ -83,6 +85,7 @@ struct Quakinator {
 
                 count++;
                 data[time] = {lat,lon,mag};
+                keys.push_back(time);
                 line = "";
                 testNum++;
             }

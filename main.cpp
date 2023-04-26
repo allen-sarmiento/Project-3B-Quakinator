@@ -19,7 +19,7 @@ void printSortCriteriaSubMenu();
 void printDisplayCountSubMenu();
 void printDisplayListSubMenu();
 void sortList(bool (*compare)(Earthquake&, Earthquake&));
-string getEQString();
+string getEQString(string key);
 
 Quakinator quakinator;
 vector<string> sortAlgos, sortCriteria;
@@ -50,7 +50,7 @@ int main() {
                 printDisplayCountSubMenu();
                 break;
             case 4:     // Shuffle List
-                random_shuffle(quakinator.data.begin(), quakinator.data.end());
+                random_shuffle(quakinator.keys.begin(), quakinator.keys.end());
                 cout << "\nList has been shuffled!\n\n";
                 break;
             case 5:     // Display List
@@ -64,13 +64,13 @@ int main() {
                         // sortList(Earthquake::compareByTime);
                         break;
                     case 2:
-                        sortList(Earthquake::compareByMagnitude);
+                        // sortList(Earthquake::compareByMagnitude);
                         break;
                     case 3:
-                        sortList(Earthquake::compareByLongitude);
+                        // sortList(Earthquake::compareByLongitude);
                         break;
                     case 4:
-                        sortList(Earthquake::compareByLatitude);
+                        // sortList(Earthquake::compareByLatitude);
                         break;
                     default:
                         break;
@@ -204,17 +204,15 @@ void printDisplayListSubMenu() {
     cout << "\n---------------------------\n";
     cout << "[Display List]\n\n";
 
-    int i = 1;
-    for(auto iter = quakinator.data.begin(); iter != quakinator.data.end(); iter++){
-        cout << i << ". " << getEQString(iter->second) << "\n";
-    }
+    for (int i = 0; i < quakinator.keys.size(); i++)
+        cout << i+1 << ". " << getEQString(quakinator.keys[i]);
 }
 
 void sortList(bool (*compare)(Earthquake&, Earthquake&)) {
 
     switch (algoOption) {
         case 1:
-            std::sort(quakinator.data.begin(), quakinator.data.end(), compare);
+            // std::sort(quakinator.keys.begin(), quakinator.keys.end(), compare);
             cout << "\nSorted by STL sort.\n";
             break;
         case 2:
@@ -226,6 +224,7 @@ void sortList(bool (*compare)(Earthquake&, Earthquake&)) {
     }
 }
 
-string getEQString(vector<double> v) {
-    return "Lat: " + to_string(v[0]) + ", Lon: " + to_string(v[1]) + ", Mag: " + to_string(v[2]);
+string getEQString(string key) {
+    vector<double> v = quakinator.data[key];
+    return "Time: " + key + ", Lat: " + to_string(v[0]) + ", Lon: " + to_string(v[1]) + ", Mag: " + to_string(v[2]) + "\n";
 }
