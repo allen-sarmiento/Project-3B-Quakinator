@@ -6,7 +6,6 @@
 #include <algorithm>
 #include <chrono>
 
-#include "Earthquake.h"
 #include "Quakinator.h"
 
 using namespace std;
@@ -19,7 +18,8 @@ void printSortAlgoSubMenu();
 void printSortCriteriaSubMenu();
 void printDisplayCountSubMenu();
 void printDisplayListSubMenu();
-void sortList(bool (*compare)(Earthquake*, Earthquake*));
+void sortList(bool (*compare)(Earthquake&, Earthquake&));
+string getEQString();
 
 Quakinator quakinator;
 vector<string> sortAlgos, sortCriteria;
@@ -50,7 +50,7 @@ int main() {
                 printDisplayCountSubMenu();
                 break;
             case 4:     // Shuffle List
-                random_shuffle(quakinator.array.begin(), quakinator.array.end());
+                random_shuffle(quakinator.data.begin(), quakinator.data.end());
                 cout << "\nList has been shuffled!\n\n";
                 break;
             case 5:     // Display List
@@ -203,23 +203,29 @@ void printDisplayCountSubMenu() {
 void printDisplayListSubMenu() {
     cout << "\n---------------------------\n";
     cout << "[Display List]\n\n";
-    
-    for (int i = 0; i < displayCount; i++)
-        cout << i+1 << ". " << quakinator.array[i]->to_string() << "\n";
+
+    int i = 1;
+    for(auto iter = quakinator.data.begin(); iter != quakinator.data.end(); iter++){
+        cout << i << ". " << getEQString(iter->second) << "\n";
+    }
 }
 
-void sortList(bool (*compare)(Earthquake*, Earthquake*)) {
+void sortList(bool (*compare)(Earthquake&, Earthquake&)) {
 
     switch (algoOption) {
         case 1:
-            std::sort(quakinator.array.begin(), quakinator.array.end(), compare);
+            std::sort(quakinator.data.begin(), quakinator.data.end(), compare);
             cout << "\nSorted by STL sort.\n";
             break;
         case 2:
-            quakinator.quickSort(0, quakinator.array.size()-1, compare);
+            // quakinator.quickSort(0, quakinator.earthquakeKeys.size()-1, compare);
             cout << "\nSorted by quicksort.\n";
             break;
         default:
             cout << "\nError. No algorithm specified.";
     }
+}
+
+string getEQString(vector<double> v) {
+    return "Lat: " + to_string(v[0]) + ", Lon: " + to_string(v[1]) + ", Mag: " + to_string(v[2]);
 }
