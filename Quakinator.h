@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Earthquake.h"
 #include <string>
 #include <iostream>
 #include <fstream>
@@ -12,9 +11,21 @@ using namespace std;
 struct Quakinator {
 
     // Using time string as keys
-    unordered_map<string, vector<double>> data;
+    static unordered_map<string, vector<double>> data;
 
     vector<string> keys;
+
+    static bool compareByLatitude(string a, string b) {
+        return data[a][0] < data[b][0];
+    };
+
+    static bool compareByLongitude(string a, string b) {
+        return data[a][1] < data[b][1];
+    };
+
+    static  bool compareByMagnitude(string a, string b) {
+        return data[a][2] < data[b][2];
+    };
 
     /*
     void swap(Earthquake& a, Earthquake& b) {

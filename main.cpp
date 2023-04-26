@@ -18,7 +18,7 @@ void printSortAlgoSubMenu();
 void printSortCriteriaSubMenu();
 void printDisplayCountSubMenu();
 void printDisplayListSubMenu();
-void sortList(bool (*compare)(Earthquake&, Earthquake&));
+void sortList(bool (*compare)(string, string));
 string getEQString(string key);
 
 Quakinator quakinator;
@@ -61,16 +61,16 @@ int main() {
                 // Sort list based on criteria
                 switch (criteriaOption) {
                     case 1:
-                        // sortList(Earthquake::compareByTime);
+                        // sortList(Quakinator::compareByTime);
                         break;
                     case 2:
-                        // sortList(Earthquake::compareByMagnitude);
+                        sortList(Quakinator::compareByMagnitude);
                         break;
                     case 3:
-                        // sortList(Earthquake::compareByLongitude);
+                        sortList(Quakinator::compareByLongitude);
                         break;
                     case 4:
-                        // sortList(Earthquake::compareByLatitude);
+                        sortList(Quakinator::compareByLatitude);
                         break;
                     default:
                         break;
@@ -208,11 +208,11 @@ void printDisplayListSubMenu() {
         cout << i+1 << ". " << getEQString(quakinator.keys[i]);
 }
 
-void sortList(bool (*compare)(Earthquake&, Earthquake&)) {
+void sortList(bool (*compare)(string, string)) {
 
     switch (algoOption) {
         case 1:
-            // std::sort(quakinator.keys.begin(), quakinator.keys.end(), compare);
+            std::sort(quakinator.keys.begin(), quakinator.keys.end(), compare);
             cout << "\nSorted by STL sort.\n";
             break;
         case 2:
@@ -225,6 +225,6 @@ void sortList(bool (*compare)(Earthquake&, Earthquake&)) {
 }
 
 string getEQString(string key) {
-    vector<double> v = quakinator.data[key];
+    vector<double> v = Quakinator::data[key];
     return "Time: " + key + ", Lat: " + to_string(v[0]) + ", Lon: " + to_string(v[1]) + ", Mag: " + to_string(v[2]) + "\n";
 }

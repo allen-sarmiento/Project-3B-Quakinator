@@ -27,17 +27,7 @@ struct Earthquake {
     };
     */
 
-    static  bool compareByMagnitude(Earthquake& a, Earthquake& b) {
-        return a.magnitude <= b.magnitude;
-    };
-
-    static bool compareByLongitude(Earthquake& a, Earthquake& b) {
-        return a.longitude <= b.longitude;
-    };
-
-    static bool compareByLatitude(Earthquake& a, Earthquake& b) {
-        return a.latitude <= b.latitude;
-    };
+    
 
     string toString() {
         return "Time(" + this->sTime + "), Lat(" + std::to_string(this->latitude)  + "), Lon(" + std::to_string(this->longitude) + "), Mag(" + std::to_string(this->magnitude) + ")";
