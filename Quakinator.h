@@ -45,18 +45,21 @@ struct Quakinator {
                 if (!compare(keys[j], keys[low])) {
                     break;
                 }
-                down--;
+                if (down > 0)
+                    down--;
             }
             if (up < down) {
-                swap(keys[up], keys[down]);
+                std::swap(keys[up], keys[down]);
             }
         }
-        swap(keys[low], keys[down]);
+        std::swap(keys[low], keys[down]);
         return down;
     }
 
     void quickSort(int low, int high, bool (*compare)(const string&, const string&)) {
-            if (low < high) {
+        if (low < high) {
+            if (low < 0)
+                cout << "LOW IS OUT OF BOUNDS: " << low << "\n";
             int pivot = partition(low, high, compare);
             quickSort(low, pivot - 1, compare);
             quickSort(pivot + 1, high, compare);

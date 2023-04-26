@@ -204,7 +204,7 @@ void printDisplayListSubMenu() {
     cout << "\n---------------------------\n";
     cout << "[Display List]\n\n";
 
-    for (int i = 0; i < quakinator.keys.size(); i++)
+    for (int i = 0; i < displayCount; i++)
         cout << i+1 << ". " << getEQString(quakinator.keys[i]);
 }
 
@@ -216,7 +216,7 @@ void sortList(bool (*compare)(const string&, const string&)) {
             cout << "\nSorted by STL sort.\n";
             break;
         case 2:
-            // quakinator.quickSort(0, quakinator.earthquakeKeys.size()-1, compare);
+            quakinator.quickSort(0, quakinator.keys.size()-1, compare);
             cout << "\nSorted by quicksort.\n";
             break;
         default:
