@@ -13,7 +13,7 @@ struct Quakinator {
 
     static unordered_map<string, vector<double>> data;
 
-    vector<string> keys;
+    static vector<string> keys;
 
     static bool compareByLatitude(const string& a, const string& b) {
         return data[a][0] >= data[b][0];
@@ -27,13 +27,7 @@ struct Quakinator {
         return data[a][2] >= data[b][2];
     }
 
-    void swap(string& a, string& b) {
-        string t = a;
-        a = b;
-        b = t;
-    }
-
-    int partition(int low, int high, bool (*compare)(const string&, const string&)) {
+    static int partition(int low, int high, bool (*compare)(const string&, const string&)) {
         string pivot = keys[low];
         int up = low+1;
         int down = high;
@@ -41,7 +35,7 @@ struct Quakinator {
         while (up <= down) {
             while (up <= down && compare(keys[up], pivot))
                 up++;
-            while (up <= down && (!compare(keys[up], pivot)))
+            while (up <= down && (!compare(keys[down], pivot)))
                 down--;
             if (up < down)
                 std::swap(keys[up], keys[down]);
@@ -50,7 +44,7 @@ struct Quakinator {
         return down;
     }
 
-    void quickSort(int low, int high, bool (*compare)(const string&, const string&)) {
+    static void quickSort(int low, int high, bool (*compare)(const string&, const string&)) {
         if (low < high) {
             int pivot = partition(low, high, compare);
             quickSort(low, pivot - 1, compare);
@@ -58,11 +52,11 @@ struct Quakinator {
         }
     }
 
-    void init() {
+    static void init() {
         int testNum = 0;
         int count = 0;
         cout << "\n";
-        for (int i = 1; i <= 1; i++) {
+        for (int i = 1; i <= 7; i++) {
 
             ifstream file;
             file.open("data\\query_" + to_string(i) + ".csv");
@@ -83,8 +77,10 @@ struct Quakinator {
                 mag = stod(temp);
 
                 count++;
-                data[time] = {lat,lon,mag};
+                vector<double> v{lat,lon,mag};
+                data[time] = v;
                 keys.push_back(time);
+                // keys.push_back(to_string(mag));
                 line = "";
                 testNum++;
             }

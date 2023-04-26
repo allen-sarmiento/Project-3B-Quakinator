@@ -22,8 +22,9 @@ void printDisplayListSubMenu();
 void sortList(bool (*compare)(const string&, const string&));
 string getEQString(string key);
 
-Quakinator quakinator;
+//Quakinator quakinator;
 unordered_map<string, vector<double>> Q::data;
+vector<string> Q::keys;
 vector<string> sortAlgos, sortCriteria;
 unsigned int mainOption = UINT_MAX;
 unsigned int algoOption = 1;
@@ -34,7 +35,7 @@ int main() {
 
     srand(time(nullptr));   // For random shuffle by time
     init();
-    quakinator.init();
+    Q::init();
 
     do {
         // Print menu
@@ -51,7 +52,7 @@ int main() {
                 printDisplayCountSubMenu();
                 break;
             case 4:     // Shuffle List
-                random_shuffle(quakinator.keys.begin(), quakinator.keys.end());
+                random_shuffle(Q::keys.begin(), Q::keys.end());
                 cout << "\nList has been shuffled!\n\n";
                 break;
             case 5:     // Display List
@@ -206,18 +207,18 @@ void printDisplayListSubMenu() {
     cout << "[Display List]\n\n";
 
     for (int i = 0; i < displayCount; i++)
-        cout << i+1 << ". " << getEQString(quakinator.keys[i]);
+        cout << i+1 << ". " << getEQString(Q::keys[i]);
 }
 
 void sortList(bool (*compare)(const string&, const string&)) {
 
     switch (algoOption) {
         case 1:
-            std::sort(quakinator.keys.begin(), quakinator.keys.end(), compare);
+            std::sort(Q::keys.begin(), Q::keys.end(), compare);
             cout << "\nSorted by STL sort.\n";
             break;
         case 2:
-            quakinator.quickSort(0, quakinator.keys.size()-1, compare);
+            Q::quickSort(0, Q::keys.size()-1, compare);
             cout << "\nSorted by quicksort.\n";
             break;
         default:
