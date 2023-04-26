@@ -19,11 +19,17 @@ struct Earthquake {
         this->time = -1;
     };
 
-    void swap(int *a, int *b) {
-        int t = *a;
-        *a = *b;
-        *b = t;
-    };
+    ~Earthquake() {
+
+    }
+
+    Earthquake& operator=(const Earthquake& eq) {
+        this->sTime = eq.sTime;
+        this->magnitude = eq.magnitude;
+        this->longitude = eq.longitude;
+        this->latitude = eq.latitude;
+        return *this;
+    }
 
     /*
     static bool compareByTime(const Earthquake& a, const Earthquake& b) {
@@ -31,16 +37,16 @@ struct Earthquake {
     };
     */
 
-    static  bool compareByMagnitude(const Earthquake& a, const Earthquake& b) {
-        return a.magnitude < b.magnitude;
+    static  bool compareByMagnitude(Earthquake* a, Earthquake* b) {
+        return a->magnitude < b->magnitude;
     };
 
-    static bool compareByLongitude(const Earthquake& a, const Earthquake& b) {
-        return a.longitude < b.longitude;
+    static bool compareByLongitude(Earthquake* a, Earthquake* b) {
+        return a->longitude < b->longitude;
     };
 
-    static bool compareByLatitude(const Earthquake& a, const Earthquake& b) {
-        return a.latitude < b.latitude;
+    static bool compareByLatitude(Earthquake* a, Earthquake* b) {
+        return a->latitude < b->latitude;
     };
 
     string to_string() {

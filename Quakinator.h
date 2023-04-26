@@ -10,10 +10,17 @@ using namespace std;
 
 struct Quakinator {
 
-    vector<Earthquake> array;
+    vector<Earthquake*> array;
 
-    int partition(int low, int high, bool (*compare)(const Earthquake&, const Earthquake&)=nullptr) {
-        Earthquake pivot = array[low];
+    void swap(Earthquake* a, Earthquake* b) {
+
+        Earthquake* t = a;
+        a = b;
+        b = t;
+    }
+
+    int partition(int low, int high, bool (*compare)(Earthquake*, Earthquake*)) {
+        Earthquake* pivot = array[low];
         int up = low;
         int down = high;
 
@@ -38,7 +45,7 @@ struct Quakinator {
         return down;
     }
 
-    void quickSort(int low, int high, bool (*compare)(const Earthquake&, const Earthquake&)=nullptr) {
+    void quickSort(int low, int high, bool (*compare)(Earthquake*, Earthquake*)) {
         if (low < high) {
             int pivot = partition(low, high, compare);
             quickSort(low, pivot - 1, compare);
@@ -47,9 +54,10 @@ struct Quakinator {
     }
 
     void init() {
+        int testNum = 0;
         int count = 0;
         cout << "\n";
-        for (int i = 1; i <= 7; i++) {
+        for (int i = 1; i <= 1; i++) {
             
             ifstream file = nullptr;
             file.open("data\\query_" + to_string(i) + ".csv");
@@ -58,7 +66,7 @@ struct Quakinator {
             string line = "";
             getline(file, line);    // Clear header line
             
-            while(getline(file, line)) {
+            while(getline(file, line) && testNum < 5) {
                 string time = "", temp = "";
                 double lat = -1, lon = -1, mag = -1;
                 stringstream tokens(line);
@@ -71,13 +79,14 @@ struct Quakinator {
                 mag = stod(temp);
 
                 count++;
-                Earthquake eq(time, mag, lon, lat);
+                Earthquake* eq = new Earthquake(time, mag, lon, lat);
                 array.push_back(eq);
                 line = "";
+                testNum++;
             }
         }
         cout << count << " EQs loaded.\n\n";
 
-        cout << "Last EQ Loaded: " << array[array.size()-1].to_string() << "\n\n";
+        cout << "Last EQ Loaded: " << array[array.size()-1]->to_string() << "\n\n";
     }
 };
