@@ -8,7 +8,6 @@
 #include "Earthquake.h"
 #include "Quakinator.h"
 
-
 using namespace std;
 
 void init();
@@ -19,6 +18,7 @@ void printSortAlgoSubMenu();
 void printSortCriteriaSubMenu();
 void printDisplayCountSubMenu();
 void printDisplayListSubMenu();
+void sortList(bool (*compare)(const Earthquake&, const Earthquake&));
 
 Quakinator quakinator;
 vector<string> sortAlgos, sortCriteria;
@@ -50,23 +50,23 @@ int main() {
                 break;
             case 4:     // Shuffle List
                 random_shuffle(quakinator.array.begin(), quakinator.array.end());
-                cout << "List has been shuffled!\n";
+                cout << "\nList has been shuffled!\n\n";
                 break;
             case 5:     // Display List
+
                 // Sort list based on criteria
-                
                 switch (criteriaOption){
                     case 1:
-                        std::sort(quakinator.array.begin(), quakinator.array.end(), Earthquake::compareByTime);
+                        sortList(Earthquake::compareByTime);
                         break;
                     case 2:
-                        std::sort(quakinator.array.begin(), quakinator.array.end(), Earthquake::compareByMagnitude);
+                        sortList(Earthquake::compareByMagnitude);
                         break;
                     case 3:
-                        std::sort(quakinator.array.begin(), quakinator.array.end(), Earthquake::compareByLongitude);
+                        sortList(Earthquake::compareByLongitude);
                         break;
                     case 4:
-                        std::sort(quakinator.array.begin(), quakinator.array.end(), Earthquake::compareByLatitude);
+                        sortList(Earthquake::compareByLatitude);
                         break;
                     default:
                         cout << "\nPlease enter a valid option.\n";
@@ -195,4 +195,20 @@ void printDisplayListSubMenu() {
     
     for (int i = 0; i < displayCount; i++)
         cout << i+1 << ". " << quakinator.array[i].to_string() << "\n";
+}
+
+void sortList(bool (*compare)(const Earthquake&, const Earthquake&)) {
+
+    switch (algoOption) {
+        case 1:
+            std::sort(quakinator.array.begin(), quakinator.array.end(), compare);
+            cout << "\nSorted by STL sort.\n";
+            break;
+        case 2:
+            quakinator.quickSort(0, quakinator.array.size()-1, compare);
+            cout << "\nSorted by quicksort.\n";
+            break;
+        default:
+            cout << "\nError. No algorithm specified.";
+    }
 }
