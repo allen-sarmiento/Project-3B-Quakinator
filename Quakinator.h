@@ -12,6 +12,8 @@ struct Quakinator {
 
     vector<string> keys;
 
+    vector<double> mags;
+
     static bool compareByLatitude(const string& a, const string& b) {
         return data[a][0] < data[b][0];
     }
@@ -22,6 +24,10 @@ struct Quakinator {
 
     static bool compareByMagnitude(const string& a, const string& b) {
         return data[a][2] < data[b][2];
+    }
+
+    static bool compareByMagnitude2(const double& a, const double& b) {
+        return a < b;
     }
 
     void swap(string& a, string& b) {
@@ -93,6 +99,7 @@ struct Quakinator {
                 count++;
                 data[time] = {lat,lon,mag};
                 keys.push_back(time);
+                mags.push_back(mag);
                 line = "";
                 testNum++;
             }
