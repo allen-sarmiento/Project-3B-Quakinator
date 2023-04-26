@@ -18,7 +18,7 @@ void printSortAlgoSubMenu();
 void printSortCriteriaSubMenu();
 void printDisplayCountSubMenu();
 void printDisplayListSubMenu();
-void sortList(bool (*compare)(string, string));
+void sortList(bool (*compare)(const string&, const string&));
 string getEQString(string key);
 
 Quakinator quakinator;
@@ -208,7 +208,7 @@ void printDisplayListSubMenu() {
         cout << i+1 << ". " << getEQString(quakinator.keys[i]);
 }
 
-void sortList(bool (*compare)(string, string)) {
+void sortList(bool (*compare)(const string&, const string&)) {
 
     switch (algoOption) {
         case 1:
