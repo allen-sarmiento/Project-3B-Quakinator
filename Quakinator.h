@@ -12,7 +12,7 @@ struct Quakinator {
 
     vector<Earthquake> array;
 
-    int partition(int low, int high, bool (*compare)(const Earthquake&, const Earthquake&)) {
+    int partition(int low, int high, bool (*compare)(const Earthquake&, const Earthquake&)=nullptr) {
         Earthquake pivot = array[low];
         int up = low;
         int down = high;
@@ -38,7 +38,7 @@ struct Quakinator {
         return down;
     }
 
-    void quickSort(int low, int high, bool (*compare)(const Earthquake&, const Earthquake&)) {
+    void quickSort(int low, int high, bool (*compare)(const Earthquake&, const Earthquake&)=nullptr) {
         if (low < high) {
             int pivot = partition(low, high, compare);
             quickSort(low, pivot - 1, compare);

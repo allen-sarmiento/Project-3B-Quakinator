@@ -208,7 +208,7 @@ void printDisplayListSubMenu() {
         cout << i+1 << ". " << quakinator.array[i].to_string() << "\n";
 }
 
-void sortList(bool (*compare)(const Earthquake&, const Earthquake&)) {
+void sortList(bool (*compare)(const Earthquake&, const Earthquake&)=nullptr) {
 
     switch (algoOption) {
         case 1:
