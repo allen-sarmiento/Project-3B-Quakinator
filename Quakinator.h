@@ -51,7 +51,7 @@ struct Quakinator {
         cout << "\n";
         for (int i = 1; i <= 7; i++) {
             
-            ifstream file;
+            ifstream file = nullptr;
             file.open("data\\query_" + to_string(i) + ".csv");
             cout << "Loading Earthquake(" << to_string(i) << ")...\n";
 
@@ -59,8 +59,8 @@ struct Quakinator {
             getline(file, line);    // Clear header line
             
             while(getline(file, line)) {
-                string time, temp = "";
-                double lat, lon, mag;
+                string time = "", temp = "";
+                double lat = -1, lon = -1, mag = -1;
                 stringstream tokens(line);
                 getline(tokens, time, ',');
                 getline(tokens, temp, ',');
@@ -71,10 +71,13 @@ struct Quakinator {
                 mag = stod(temp);
 
                 count++;
-                array.push_back(Earthquake(time, mag, lon, lat));
+                Earthquake eq(time, mag, lon, lat);
+                array.push_back(eq);
                 line = "";
             }
         }
         cout << count << " EQs loaded.\n\n";
+
+        cout << "Last EQ Loaded: " << array[array.size()-1].to_string() << "\n\n";
     }
 };
