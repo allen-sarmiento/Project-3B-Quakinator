@@ -35,6 +35,31 @@ struct Quakinator {
         a = b;
         b = t;
     }
+    int Magpartition(int low, int high, bool (*compare)(const string&, const string&)) {
+        int up = low;
+        int down = high;
+
+        while (up < down) {
+            for (int j = up; j < high; j++) {
+                if (compare(keys[j], keys[low])) {
+                    break;
+                }
+                up++;
+            }
+            for (int j = high; j > low; j--) {
+                if (!compare(keys[j], keys[low])) {
+                    break;
+                }
+                if (down > 0)
+                    down--;
+            }
+            if (up < down) {
+                std::swap(keys[up], keys[down]);
+            }
+        }
+        std::swap(keys[low], keys[down]);
+        return down;
+    }
 
     int partition(int low, int high, bool (*compare)(const string&, const string&)) {
         int up = low;
