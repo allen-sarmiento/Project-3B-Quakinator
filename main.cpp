@@ -22,12 +22,12 @@ void sortList(bool (*compare)(string, string));
 string getEQString(string key);
 
 Quakinator quakinator;
+unordered_map<string, vector<double>> Quakinator::data;
 vector<string> sortAlgos, sortCriteria;
 unsigned int mainOption = UINT_MAX;
 unsigned int algoOption = 1;
 unsigned int criteriaOption = 1;
 unsigned int displayCount = 10;
-
 
 int main() {
 
