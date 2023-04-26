@@ -12,9 +12,9 @@ struct Quakinator {
 
     vector<Earthquake*> array;
 
-    void swap(Earthquake* a, Earthquake* b) {
+    void swap(Earthquake& a, Earthquake& b) {
 
-        Earthquake* t = a;
+        Earthquake t = a;
         a = b;
         b = t;
     }
@@ -38,10 +38,10 @@ struct Quakinator {
                 down--;
             }
             if (up < down) {
-                swap(array[up], array[down]);
+                swap(*array[up], *array[down]);
             }
         }
-        swap(array[low], array[down]);
+        swap(*array[low], *array[down]);
         return down;
     }
 
@@ -64,9 +64,9 @@ struct Quakinator {
             cout << "Loading Earthquake(" << to_string(i) << ")...\n";
 
             string line = "";
-            getline(file, line);    // Clear header line
+            // getline(file, line);    // Clear header line
             
-            while(getline(file, line) && testNum < 5) {
+            while(getline(file, line) && testNum < 100) {
                 string time = "", temp = "";
                 double lat = -1, lon = -1, mag = -1;
                 stringstream tokens(line);

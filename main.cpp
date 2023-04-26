@@ -78,9 +78,9 @@ int main() {
 
                 // End sort clock
                 auto end = chrono::high_resolution_clock::now();
-                float duration = chrono::duration_cast<chrono::milliseconds>(end - start).count();
+                float duration = chrono::duration_cast<chrono::microseconds>(end - start).count();
 
-                cout << "\nSort Duration: " << duration << "\n";
+                cout << "\nSort Duration: " << duration << " microseconds\n";
 
                 // Display list
                 printDisplayListSubMenu();

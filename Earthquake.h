@@ -23,11 +23,20 @@ struct Earthquake {
 
     }
 
+    Earthquake(const Earthquake& other) 
+        : time(other.time), sTime(other.sTime), magnitude(other.magnitude),
+          longitude(other.longitude), latitude(other.latitude) 
+    {
+        // No dynamic memory allocation, so no need to do anything else
+    }
+
     Earthquake& operator=(const Earthquake& eq) {
-        this->sTime = eq.sTime;
-        this->magnitude = eq.magnitude;
-        this->longitude = eq.longitude;
-        this->latitude = eq.latitude;
+        if (this != &eq) { // check for self-assignment
+            sTime = eq.sTime;
+            magnitude = eq.magnitude;
+            longitude = eq.longitude;
+            latitude = eq.latitude;
+        }
         return *this;
     }
 
