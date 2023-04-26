@@ -19,7 +19,7 @@ void printSortAlgoSubMenu();
 void printSortCriteriaSubMenu();
 void printDisplayCountSubMenu();
 void printDisplayListSubMenu();
-void sortList(bool (*compare)(const Earthquake&, const Earthquake&));
+void sortList(bool (*compare)(Earthquake*, Earthquake*));
 
 Quakinator quakinator;
 vector<string> sortAlgos, sortCriteria;
@@ -205,10 +205,10 @@ void printDisplayListSubMenu() {
     cout << "[Display List]\n\n";
     
     for (int i = 0; i < displayCount; i++)
-        cout << i+1 << ". " << quakinator.array[i].to_string() << "\n";
+        cout << i+1 << ". " << quakinator.array[i]->to_string() << "\n";
 }
 
-void sortList(bool (*compare)(const Earthquake&, const Earthquake&)) {
+void sortList(bool (*compare)(Earthquake*, Earthquake*)) {
 
     switch (algoOption) {
         case 1:
