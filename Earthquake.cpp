@@ -1,3 +1,4 @@
+/*
 #include "Earthquake.h"
 #include <string>
 #include <vector>
@@ -5,7 +6,7 @@
 
 using namespace std;  
 
-Earthquake::Earthquake(string sTime="", double magnitude=-1, double longitude=-1, double latitude=-1) {
+Earthquake::Earthquake(string sTime, double magnitude, double longitude, double latitude) {
     this->sTime = sTime;
     this->magnitude = magnitude;
     this->longitude = longitude;
@@ -36,3 +37,4 @@ bool Earthquake::compareByLatitude(const Earthquake& a, const Earthquake& b) {
 string Earthquake::to_string() {
     return "Time(" + sTime + "), Lat(" + std::to_string(latitude)  + "), Lon(" + std::to_string(longitude) + "), Mag(" + std::to_string(magnitude) + ")";
 }
+*/

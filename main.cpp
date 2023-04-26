@@ -61,7 +61,7 @@ int main() {
                 // Sort list based on criteria
                 switch (criteriaOption) {
                     case 1:
-                        sortList(Earthquake::compareByTime);
+                        // sortList(Earthquake::compareByTime);
                         break;
                     case 2:
                         sortList(Earthquake::compareByMagnitude);
@@ -208,7 +208,7 @@ void printDisplayListSubMenu() {
         cout << i+1 << ". " << quakinator.array[i].to_string() << "\n";
 }
 
-void sortList(bool (*compare)(const Earthquake&, const Earthquake&)=nullptr) {
+void sortList(bool (*compare)(const Earthquake&, const Earthquake&)) {
 
     switch (algoOption) {
         case 1:
