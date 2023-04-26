@@ -5,7 +5,7 @@
 
 using namespace std;  
 
-Earthquake::Earthquake(string sTime, double magnitude, double longitude, double latitude) {
+Earthquake::Earthquake(string sTime="", double magnitude=-1, double longitude=-1, double latitude=-1) {
     this->sTime = sTime;
     this->magnitude = magnitude;
     this->longitude = longitude;
