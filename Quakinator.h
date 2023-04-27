@@ -6,36 +6,33 @@
 #include <sstream>
 #include <unordered_map>
 #include <vector>
+#include <algorithm>
 
 using namespace std;
 
 struct Quakinator {
 
+    // 0: mag, 1: lon, 2: lat
     static unordered_map<string, vector<double>> data;
-
     static vector<string> keys;
+    static unsigned int criteriaIndex;
 
-    static bool compareByLatitude(const string& a, const string& b) {
-        return data[a][0] >= data[b][0];
+    static bool compare(const string& a, const string& b) {
+        // cout << "CI: " << criteriaIndex << "\n";
+        return data[a][criteriaIndex] >= data[b][criteriaIndex];
     }
 
-    static bool compareByLongitude(const string& a, const string& b) {
-        return data[a][1] >= data[b][1];
-    }
+    static int partition(int low, int high) {
 
-    static bool compareByMagnitude(const string& a, const string& b) {
-        return data[a][2] >= data[b][2];
-    }
+        string pivotKey = keys[low];
 
-    static int partition(int low, int high, bool (*compare)(const string&, const string&)) {
-        string pivot = keys[low];
         int up = low+1;
         int down = high;
 
         while (up <= down) {
-            while (up <= down && compare(keys[up], pivot))
+            while (data[keys[up]][criteriaIndex] >= data[pivotKey][criteriaIndex]) 
                 up++;
-            while (up <= down && (!compare(keys[down], pivot)))
+            while (up <= down && data[keys[down]][criteriaIndex] < data[pivotKey][criteriaIndex])
                 down--;
             if (up < down)
                 std::swap(keys[up], keys[down]);
@@ -44,27 +41,24 @@ struct Quakinator {
         return down;
     }
 
-    static void quickSort(int low, int high, bool (*compare)(const string&, const string&)) {
+    static void quickSort(int low, int high) {
         if (low < high) {
-            int pivot = partition(low, high, compare);
-            quickSort(low, pivot - 1, compare);
-            quickSort(pivot + 1, high, compare);
+            int pivot = partition(low, high);
+            quickSort(low, pivot - 1);
+            quickSort(pivot + 1, high);
         }
     }
 
     static void init() {
-        int testNum = 0;
         int count = 0;
         cout << "\n";
         for (int i = 1; i <= 7; i++) {
-
             ifstream file;
             file.open("data\\query_" + to_string(i) + ".csv");
             cout << "Loading Earthquake(" << to_string(i) << ")...\n";
-
             string line = "";
 
-            while(getline(file, line) && true) {
+            while(getline(file, line)) {
                 string time = "", temp = "";
                 double lat = -1, lon = -1, mag = -1;
                 stringstream tokens(line);
@@ -77,16 +71,11 @@ struct Quakinator {
                 mag = stod(temp);
 
                 count++;
-                vector<double> v{lat,lon,mag};
-                data[time] = v;
+                data[time] = {mag,lon,lat};
                 keys.push_back(time);
-                // keys.push_back(to_string(mag));
                 line = "";
-                testNum++;
             }
         }
         cout << count << " EQs loaded.\n\n";
-
-        // cout << "Last EQ Loaded: " << to_string(data[]) << "\n\n";
     }
 };

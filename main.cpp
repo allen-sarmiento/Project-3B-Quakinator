@@ -19,16 +19,16 @@ void printSortAlgoSubMenu();
 void printSortCriteriaSubMenu();
 void printDisplayCountSubMenu();
 void printDisplayListSubMenu();
-void sortList(bool (*compare)(const string&, const string&));
+void sortList();
 string getEQString(string key);
 
-//Quakinator quakinator;
 unordered_map<string, vector<double>> Q::data;
 vector<string> Q::keys;
+unsigned int Q::criteriaIndex = 0;
 vector<string> sortAlgos, sortCriteria;
 unsigned int mainOption = UINT_MAX;
 unsigned int algoOption = 1;
-unsigned int criteriaOption = 1;
+unsigned int criteriaOption = 2;
 unsigned int displayCount = 10;
 
 int main() {
@@ -61,28 +61,25 @@ int main() {
                 auto start = chrono::high_resolution_clock::now();
 
                 // Sort list based on criteria
-                switch (criteriaOption) {
+                switch (algoOption) {
                     case 1:
-                        // sortList(Q::compareByTime);
+                        std::sort(Q::keys.begin(), Q::keys.end(), Q::compare);
+                        cout << "\nSorted by STL sort.\n";
                         break;
                     case 2:
-                        sortList(Q::compareByMagnitude);
+                        Q::quickSort(0, Q::keys.size()-1);
+                        cout << "\nSorted by quicksort.\n";
                         break;
                     case 3:
-                        sortList(Q::compareByLongitude);
-                        break;
-                    case 4:
-                        sortList(Q::compareByLatitude);
-                        break;
-                    default:
+                        cout << "\nList was not sorted.\n";
                         break;
                 }
 
                 // End sort clock
                 auto end = chrono::high_resolution_clock::now();
-                float duration = chrono::duration_cast<chrono::microseconds>(end - start).count();
+                float duration = chrono::duration_cast<chrono::milliseconds>(end - start).count();
 
-                cout << "\nSort Duration: " << duration << " microseconds\n";
+                cout << "\nSort Duration: " << duration << " milliseconds\n";
 
                 // Display list
                 printDisplayListSubMenu();
@@ -109,6 +106,7 @@ void init() {
     // Initialize Sorting Algorithms
     sortAlgos.push_back("STL Sort");
     sortAlgos.push_back("Quicksort");
+    sortAlgos.push_back("No Sort");
 
     // Initialize Sorting Criteria
     sortCriteria.push_back("Time");
@@ -180,6 +178,7 @@ void printSortCriteriaSubMenu() {
         cin >> temp;
     }
     criteriaOption = (temp == sortCriteria.size()+1) ? criteriaOption : temp;
+    Q::criteriaIndex = criteriaOption-2;
 }
 
 void printDisplayCountSubMenu() {
@@ -210,23 +209,7 @@ void printDisplayListSubMenu() {
         cout << i+1 << ". " << getEQString(Q::keys[i]);
 }
 
-void sortList(bool (*compare)(const string&, const string&)) {
-
-    switch (algoOption) {
-        case 1:
-            std::sort(Q::keys.begin(), Q::keys.end(), compare);
-            cout << "\nSorted by STL sort.\n";
-            break;
-        case 2:
-            Q::quickSort(0, Q::keys.size()-1, compare);
-            cout << "\nSorted by quicksort.\n";
-            break;
-        default:
-            cout << "\nError. No algorithm specified.";
-    }
-}
-
 string getEQString(string key) {
     vector<double> v = Q::data[key];
-    return "Time: " + key + ", Lat: " + to_string(v[0]) + ", Lon: " + to_string(v[1]) + ", Mag: " + to_string(v[2]) + "\n";
+    return "Time: " + key + ", Mag: " + to_string(v[0]) + ", Lon: " + to_string(v[1]) + ", Lat: " + to_string(v[2]) + "\n";
 }
