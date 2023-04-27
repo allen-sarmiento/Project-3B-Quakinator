@@ -16,10 +16,11 @@ using namespace std;
 struct Quakinator {
 
     // 0: mag, 1: lon, 2: lat
-    static unordered_map<string, vector<double>> data;
-    static vector<string> keys;
+    static unordered_map<string, vector<double>> data;  // Stores attributes of each earthquake, timestamp string is the key 
+    static vector<string> keys;                         // Ordered list of the keys. Sorting will be done on this vector
     static int criteriaIndex;
 
+    // Compares two earthquake keys based on the criteria to sort by
     static bool compare(const string& a, const string& b) {
         if (criteriaIndex >= 0)
             return data[a][criteriaIndex] >= data[b][criteriaIndex];
@@ -53,6 +54,7 @@ struct Quakinator {
         }
     }
 
+    // Loads data into the hashtable
     static void init() {
         int count = 0;
         cout << "\n";
