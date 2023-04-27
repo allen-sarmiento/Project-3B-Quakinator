@@ -24,12 +24,12 @@ string getEQString(string key);
 
 unordered_map<string, vector<double>> Q::data;
 vector<string> Q::keys;
-unsigned int Q::criteriaIndex = 0;
+int Q::criteriaIndex = 0;
 vector<string> sortAlgos, sortCriteria;
 unsigned int mainOption = UINT_MAX;
-unsigned int algoOption = 1;
+unsigned int algoOption = 3;
 unsigned int criteriaOption = 2;
-unsigned int displayCount = 10;
+int displayCount = 10;
 
 int main() {
 
@@ -189,14 +189,16 @@ void printDisplayCountSubMenu() {
 
     while (true) {
 
+        cout << "(Enter -1 to display all earthquakes)\n";
         cout << "Enter Display Count: ";
         cin >> temp;
 
         try {
             displayCount = stoi(temp);
+            if (displayCount < -1) throw exception();
             break;
         } catch (exception e) {
-            cout << "Please enter a valid number.\n\n";
+            cout << "\nError: Please enter a valid number.\n\n";
         }
     }
 }
@@ -205,8 +207,12 @@ void printDisplayListSubMenu() {
     cout << "\n---------------------------\n";
     cout << "[Display List]\n\n";
 
-    for (int i = 0; i < displayCount; i++)
-        cout << i+1 << ". " << getEQString(Q::keys[i]);
+    if (displayCount == -1)
+        for (int i = 0; i < Q::keys.size(); i++)
+            cout << i+1 << ". " << getEQString(Q::keys[i]);
+    else
+        for (int i = 0; i < displayCount; i++)
+            cout << i+1 << ". " << getEQString(Q::keys[i]);
 }
 
 string getEQString(string key) {

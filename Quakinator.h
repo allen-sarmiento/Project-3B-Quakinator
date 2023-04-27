@@ -7,6 +7,9 @@
 #include <unordered_map>
 #include <vector>
 #include <algorithm>
+#include <ctime>
+#include <iomanip>
+#include <chrono>
 
 using namespace std;
 
@@ -15,11 +18,13 @@ struct Quakinator {
     // 0: mag, 1: lon, 2: lat
     static unordered_map<string, vector<double>> data;
     static vector<string> keys;
-    static unsigned int criteriaIndex;
+    static int criteriaIndex;
 
     static bool compare(const string& a, const string& b) {
         // cout << "CI: " << criteriaIndex << "\n";
-        return data[a][criteriaIndex] >= data[b][criteriaIndex];
+        if (criteriaIndex >= 0)
+            return data[a][criteriaIndex] >= data[b][criteriaIndex];
+        return (a.compare(b) >= 0);
     }
 
     static int partition(int low, int high) {
@@ -30,9 +35,9 @@ struct Quakinator {
         int down = high;
 
         while (up <= down) {
-            while (data[keys[up]][criteriaIndex] >= data[pivotKey][criteriaIndex]) 
+            while (compare(keys[up], pivotKey)) 
                 up++;
-            while (up <= down && data[keys[down]][criteriaIndex] < data[pivotKey][criteriaIndex])
+            while (up <= down && !compare(keys[down], pivotKey))
                 down--;
             if (up < down)
                 std::swap(keys[up], keys[down]);
@@ -69,7 +74,7 @@ struct Quakinator {
                 lon = stod(temp);
                 getline(tokens, temp, ',');
                 mag = stod(temp);
-
+                
                 count++;
                 data[time] = {mag,lon,lat};
                 keys.push_back(time);
