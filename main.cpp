@@ -28,8 +28,9 @@ int Q::criteriaIndex = 0;
 vector<string> sortAlgos, sortCriteria;
 unsigned int mainOption = UINT_MAX;
 unsigned int algoOption = 3;
-unsigned int criteriaOption = 2;
+unsigned int criteriaOption = 1;
 int displayCount = 10;
+float duration = -1;
 
 int main() {
 
@@ -64,11 +65,11 @@ int main() {
                 switch (algoOption) {
                     case 1:
                         std::sort(Q::keys.begin(), Q::keys.end(), Q::compare);
-                        cout << "\nSorted by STL sort.\n";
+                        // cout << "\nSorted by STL sort.\n";
                         break;
                     case 2:
                         Q::quickSort(0, Q::keys.size()-1);
-                        cout << "\nSorted by quicksort.\n";
+                        // cout << "\nSorted by quicksort.\n";
                         break;
                     case 3:
                         cout << "\nList was not sorted.\n";
@@ -77,9 +78,7 @@ int main() {
 
                 // End sort clock
                 auto end = chrono::high_resolution_clock::now();
-                float duration = chrono::duration_cast<chrono::milliseconds>(end - start).count();
-
-                cout << "\nSort Duration: " << duration << " milliseconds\n";
+                duration = chrono::duration_cast<chrono::milliseconds>(end - start).count();
 
                 // Display list
                 printDisplayListSubMenu();
@@ -213,6 +212,8 @@ void printDisplayListSubMenu() {
     else
         for (int i = 0; i < displayCount; i++)
             cout << i+1 << ". " << getEQString(Q::keys[i]);
+
+    cout << "\n\nSort Duration: " << duration << " milliseconds\n\n";
 }
 
 string getEQString(string key) {

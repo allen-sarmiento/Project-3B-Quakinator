@@ -21,7 +21,6 @@ struct Quakinator {
     static int criteriaIndex;
 
     static bool compare(const string& a, const string& b) {
-        // cout << "CI: " << criteriaIndex << "\n";
         if (criteriaIndex >= 0)
             return data[a][criteriaIndex] >= data[b][criteriaIndex];
         return (a.compare(b) >= 0);
@@ -37,7 +36,7 @@ struct Quakinator {
         while (up <= down) {
             while (compare(keys[up], pivotKey)) 
                 up++;
-            while (up <= down && !compare(keys[down], pivotKey))
+            while (up <= down && (!compare(keys[down], pivotKey)))
                 down--;
             if (up < down)
                 std::swap(keys[up], keys[down]);
